@@ -45,15 +45,12 @@ import ImagesAPIRoutes from './routes/api/image.routes';
 ImagesAPIRoutes(app);
 
 if (process.env.NODE_ENV === 'production') {
-	app.use('/images', express.static(path.join(__dirname, '..', 'dist-react', 'images'), { maxAge: 31557600000 }));
-	app.use('/libs', express.static(path.join(__dirname, '..', 'dist-react', 'libs'), { maxAge: 31557600000 }));
-	app.use('/static', express.static(path.join(__dirname, '..', 'dist-react', 'static'), { maxAge: 31557600000 }));
-	app.get('*', (req, res) => res.sendFile(path.join(__dirname, '..', 'dist-react', 'index.html')));
+	app.use('/', express.static(path.join(__dirname, '..', 'public')));
+	app.get('*', (req, res) => res.sendFile(path.join(__dirname, '..', 'public', 'index.html')));
 } else {
 	console.log(path.join(__dirname, '..', 'public', 'index.html'));
 	app.use('/', express.static(path.join(__dirname, '..', 'public')));
 	app.get('*', (req, res) => res.sendFile(path.join(__dirname, '..', 'public', 'index.html')));
-	// app.get('/:url', (req, res) => (res.redirect('http://localhost:3001/' + req.params.url)));
 }
 
 app.use(errorHandler());
